@@ -27,8 +27,12 @@
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="create ashotcut.ps1" />
     <Compile Include="FetchingRecordsfromDB.ps1" />
     <Compile Include="GetAlltheServiceofWindow.ps1" />
+    <Compile Include="screenshot.ps1" />
+    <Compile Include="screenshotwithpath.ps1" />
+    <Compile Include="speechread.ps1" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="Build" />
