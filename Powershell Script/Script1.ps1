@@ -1,6 +1,3 @@
-#
-# Script1.ps1
-#
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
+using System.IO;
 
 namespace Team_OOPS
 {
@@ -48,46 +46,97 @@ namespace Team_OOPS
             // Console.Read();
 
 
-            #region Creation of task
-            Task<int>[] tasks = new Task<int>[2];
-            tasks[0] = Task.Run(() =>
-             {
-                 
-                for(int i=0;i<10;i++)
-                 {
-                     Thread.Sleep(1000);
-                     Console.WriteLine("Task1-{0}", i.ToString());
-                 }
-                 return 1;
-             });
+            #region Creation of task wait any
+            //Task<int>[] tasks = new Task<int>[2];
+            //tasks[0] = Task.Run(() =>
+            // {
 
-            tasks[1] = Task.Run(() =>
-              {
-                  for (int i = 0; i < 10; i++)
-                  {
-                      Thread.Sleep(1000);
-                      Console.WriteLine("Task2-{0}", i.ToString());
-                  }
-                  return 1;
+            //    for(int i=0;i<10;i++)
+            //     {
+            //         Thread.Sleep(1000);
+            //         Console.WriteLine("Task1-{0}", i.ToString());
+            //     }
+            //     return 1;
+            // });
 
-              });
-            while(tasks.Length>0)
-            {
-                int i = Task.WaitAny(tasks);
-                Task<int> completedtask = tasks[i];
-                Console.WriteLine(completedtask.Result);
+            //tasks[1] = Task.Run(() =>
+            //  {
+            //      for (int i = 0; i < 10; i++)
+            //      {
+            //          Thread.Sleep(1000);
+            //          Console.WriteLine("Task2-{0}", i.ToString());
+            //      }
+            //      return 1;
 
-                var temp = tasks.ToList();
-                temp.RemoveAt(i);
-                tasks = temp.ToArray();
-            }
+            //  });
+            //while(tasks.Length>0)
+            //{
+            //    int i = Task.WaitAny(tasks);
+            //    Task<int> completedtask = tasks[i];
+            //    Console.WriteLine(completedtask.Result);
 
-            Console.WriteLine(Environment.NewLine + "Press any key to continue...");
-            Console.Read();
-            
-            
+            //    var temp = tasks.ToList();
+            //    temp.RemoveAt(i);
+            //    tasks = temp.ToArray();
+            //}
+
+            //Console.WriteLine(Environment.NewLine + "Press any key to continue...");
+            //Console.Read();
+
+
             #endregion
 
+            #region taskwaitforall
+            //Task<int>[] t = new Task<int>[3];
+            //t[0] = Task.Run(() =>
+            // {
+            //     Thread.Sleep(1000);
+            //     Console.WriteLine("task-1");
+            //     return 1;
+            // });
+            //t[1] = Task.Run(() =>
+            //  {
+            //      Thread.Sleep(1000);
+            //      Console.WriteLine("task-2");
+
+            //      return 2;
+            //  });
+            //t[2] = Task.Run(() =>
+            //  {
+            //      Thread.Sleep(1000);
+            //      Console.WriteLine("task-3");
+            //      return 3;
+            //  });
+            //Task.WaitAll(t);
+            //Console.WriteLine("Click any key to continue...");
+            //Console.Read();
+
+
+            #endregion
+
+
+            #region taskexample
+
+            Task[] t = new Task[2];
+            string[] files = null;
+            string[] dirs = null;
+            string docsdirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            t[0]=Task.Factory.StartNew(()=>
+                {
+                    Directory.GetFiles(docsdirectory);
+
+                });
+
+            t[1] = Task.Factory.StartNew(() =>
+
+              {
+                  Directory.GetDirectories(docsdirectory);
+              });
+
+            //Task.Factory.ContinueWhenAll
+            
+
+            #endregion  
         }
         public static void Uniq()
         {
